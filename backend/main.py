@@ -1,15 +1,26 @@
 """Main FastAPI application"""
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.models.database import init_db
 from backend.routes import auth, hr, support, admin, sales, analytics
 from config.settings import settings
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Lifespan context manager for startup and shutdown events"""
+    # Startup: Initialize database
+    init_db()
+    yield
+    # Shutdown: cleanup if needed
+    pass
+
 # Initialize FastAPI app
 app = FastAPI(
     title=settings.API_TITLE,
     version=settings.API_VERSION,
-    debug=settings.DEBUG
+    debug=settings.DEBUG,
+    lifespan=lifespan
 )
 
 # CORS middleware
@@ -28,11 +39,6 @@ app.include_router(support.router)
 app.include_router(admin.router)
 app.include_router(sales.router)
 app.include_router(analytics.router)
-
-@app.on_event("startup")
-async def startup_event():
-    """Initialize database on startup"""
-    init_db()
 
 @app.get("/")
 async def root():
