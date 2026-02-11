@@ -1,7 +1,7 @@
 """Admin Module routes"""
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from datetime import datetime
+from datetime import datetime, timezone
 from backend.models.database import get_db, Task
 from backend.models.schemas import TaskCreate, TaskUpdate
 from backend.services.ai_service import ai_service
@@ -70,7 +70,7 @@ async def generate_email(subject: str, context: str):
 @router.get("/reminders")
 async def get_reminders(db: Session = Depends(get_db)):
     """Get upcoming task reminders"""
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     upcoming_tasks = db.query(Task).filter(
         Task.due_date >= now,
         Task.status != "Completed"

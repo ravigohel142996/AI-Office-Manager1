@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import random
 from backend.models.database import get_db, Employee, Attendance, LeaveRequest
 from backend.models.schemas import (
@@ -21,7 +21,7 @@ async def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db
         department=employee.department,
         position=employee.position,
         salary=employee.salary,
-        hire_date=datetime.utcnow()
+        hire_date=datetime.now(timezone.utc)
     )
     db.add(db_employee)
     db.commit()
@@ -46,7 +46,7 @@ async def create_attendance(attendance: AttendanceCreate, db: Session = Depends(
 async def simulate_attendance(db: Session = Depends(get_db)):
     """Simulate attendance for all employees"""
     employees = db.query(Employee).all()
-    today = datetime.utcnow().date()
+    today = datetime.now(timezone.utc).date()
     
     attendance_records = []
     for emp in employees:

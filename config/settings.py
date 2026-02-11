@@ -1,5 +1,6 @@
 """Configuration settings for the AI Office Manager"""
 import os
+import secrets
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -17,7 +18,9 @@ class Settings:
     DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./ai_office_manager.db")
     
     # Security
-    SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-change-in-production")
+    # Generate a secure random key if SECRET_KEY is not provided
+    _default_secret = secrets.token_urlsafe(32)
+    SECRET_KEY = os.getenv("SECRET_KEY", _default_secret)
     ALGORITHM = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES = 30
     

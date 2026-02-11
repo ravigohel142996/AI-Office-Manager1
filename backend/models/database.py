@@ -1,5 +1,5 @@
 """Database models for AI Office Manager"""
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean, Text, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -24,7 +24,7 @@ class User(Base):
     hashed_password = Column(String)
     full_name = Column(String)
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 class Employee(Base):
     """Employee model for HR module"""
@@ -38,7 +38,7 @@ class Employee(Base):
     hire_date = Column(DateTime)
     salary = Column(Float)
     performance_score = Column(Float, default=0.0)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 class Attendance(Base):
     """Attendance records"""
@@ -49,7 +49,7 @@ class Attendance(Base):
     date = Column(DateTime)
     status = Column(String)  # Present, Absent, Leave
     hours_worked = Column(Float)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 class LeaveRequest(Base):
     """Leave request model"""
@@ -62,7 +62,7 @@ class LeaveRequest(Base):
     leave_type = Column(String)
     reason = Column(Text)
     status = Column(String, default="Pending")  # Pending, Approved, Rejected
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 class SupportTicket(Base):
     """Customer support ticket model"""
@@ -77,8 +77,8 @@ class SupportTicket(Base):
     priority = Column(String)
     status = Column(String, default="Open")  # Open, In Progress, Resolved, Closed
     ai_response = Column(Text, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
 class Task(Base):
     """Task model for admin module"""
@@ -91,7 +91,7 @@ class Task(Base):
     due_date = Column(DateTime)
     priority = Column(String)
     status = Column(String, default="Pending")  # Pending, In Progress, Completed
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 class Lead(Base):
     """Sales lead model"""
@@ -108,7 +108,7 @@ class Lead(Base):
     score = Column(Float, default=0.0)
     status = Column(String, default="New")  # New, Contacted, Qualified, Converted, Lost
     notes = Column(Text, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 def init_db():
     """Initialize database tables"""
