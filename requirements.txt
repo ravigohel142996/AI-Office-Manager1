@@ -15,7 +15,6 @@ plotly==5.18.0
 
 # Database
 sqlalchemy==2.0.27
-databases==0.9.0
 aiosqlite==0.20.0
 
 # Authentication & Security
@@ -25,7 +24,7 @@ python-dotenv==1.0.1
 
 # Utilities
 pydantic==2.6.1
-email-validator==2.1.0
+email-validator==2.1.1
 python-dateutil==2.8.2
 openpyxl==3.1.2
 Pillow==10.3.0

@@ -46,6 +46,9 @@
 - ✅ Security patches applied:
   - Pillow upgraded to 10.3.0 (fixed buffer overflow CVE)
   - python-multipart upgraded to 0.0.22 (fixed arbitrary file write and DoS CVEs)
+- ✅ Dependency cleanup:
+  - Removed deprecated `databases==0.9.0` package (unused, potential future vulnerabilities)
+  - Updated email-validator to 2.1.1 (stable, non-yanked version)
 
 ### Code Quality Improvements
 
@@ -56,6 +59,7 @@
 4. ✅ Added proper timezone-aware datetime handling
 5. ✅ **Security Patch:** Upgraded Pillow from 10.2.0 to 10.3.0 (fixed buffer overflow vulnerability)
 6. ✅ **Security Patch:** Upgraded python-multipart from 0.0.9 to 0.0.22 (fixed arbitrary file write and DoS vulnerabilities)
+7. ✅ **Dependency Cleanup:** Removed deprecated `databases` package and updated email-validator (requirements installation fix)
 
 ### Best Practices Followed
 
@@ -97,6 +101,7 @@ The AI Office Manager platform has been thoroughly reviewed and contains **NO se
 ### Recent Security Patches Applied:
 - **Pillow 10.2.0 → 10.3.0**: Fixed buffer overflow vulnerability
 - **python-multipart 0.0.9 → 0.0.22**: Fixed arbitrary file write and DoS vulnerabilities
+- **Dependency Cleanup**: Removed deprecated `databases` package, updated email-validator to 2.1.1
 
 **Security Score: 10/10** ✅
 
